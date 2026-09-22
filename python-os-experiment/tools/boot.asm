@@ -17,6 +17,7 @@ start:
     xor sp, sp
 
     mov [boot_drive], dl
+    mov [0x0600], dl
 
     mov si, message
     call print_string
