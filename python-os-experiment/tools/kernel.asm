@@ -152,6 +152,51 @@ parse_bpb:
     ret
 
 .invalid:
+    mov si, bpb_error_message
+    call print_string
+
+    mov si, bpb_bytes_message
+    call print_string
+    mov eax, [bytes_per_sector]
+    call print_hex32
+    mov si, newline
+    call print_string
+
+    mov si, bpb_cluster_message
+    call print_string
+    mov eax, [sectors_per_cluster]
+    call print_hex32
+    mov si, newline
+    call print_string
+
+    mov si, bpb_reserved_message
+    call print_string
+    mov eax, [reserved_sectors]
+    call print_hex32
+    mov si, newline
+    call print_string
+
+    mov si, bpb_fats_message
+    call print_string
+    mov eax, [number_of_fats]
+    call print_hex32
+    mov si, newline
+    call print_string
+
+    mov si, bpb_root_message
+    call print_string
+    mov eax, [root_entries]
+    call print_hex32
+    mov si, newline
+    call print_string
+
+    mov si, bpb_fat_size_message
+    call print_string
+    mov eax, [sectors_per_fat]
+    call print_hex32
+    mov si, newline
+    call print_string
+
     stc
     ret
 
@@ -650,6 +695,28 @@ disk_error_message:
 filesystem_error_message:
     db "ERROR: Unsupported FAT16 filesystem.", 13, 10
     db 0
+
+bpb_error_message:
+    db "BPB values read by kernel:", 13, 10
+    db 0
+
+bpb_bytes_message:
+    db "Bytes/sector: 0x", 0
+
+bpb_cluster_message:
+    db "Sectors/cluster: 0x", 0
+
+bpb_reserved_message:
+    db "Reserved sectors: 0x", 0
+
+bpb_fats_message:
+    db "Number of FATs: 0x", 0
+
+bpb_root_message:
+    db "Root entries: 0x", 0
+
+bpb_fat_size_message:
+    db "Sectors/FAT: 0x", 0
 
 newline:
     db 13, 10
