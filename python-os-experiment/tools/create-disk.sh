@@ -52,6 +52,9 @@ echo "[2/6] Creating FAT16 filesystem..."
 
 mkfs.fat \
     -F 16 \
+    -S 512 \
+    -s 4 \
+    -r 512 \
     -R "$RESERVED_SECTORS" \
     --mbr=no \
     -n PYOS \
