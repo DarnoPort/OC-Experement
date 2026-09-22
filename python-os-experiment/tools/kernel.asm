@@ -70,6 +70,12 @@ start:
     hlt
     jmp .hang
 
+kernel_halt:
+    cli
+.halt_loop:
+    hlt
+    jmp .halt_loop
+
 get_boot_drive:
     push ds
     xor ax, ax
@@ -499,22 +505,22 @@ read_sector:
 disk_error:
     mov si, disk_error_message
     call print_string
-    jmp halt
+    jmp kernel_halt
 
 filesystem_error:
     mov si, filesystem_error_message
     call print_string
-    jmp halt
+    jmp kernel_halt
 
 application_not_found:
     mov si, application_not_found_message
     call print_string
-    jmp halt
+    jmp kernel_halt
 
 application_too_large:
     mov si, application_too_large_message
     call print_string
-    jmp halt
+    jmp kernel_halt
 
 app_name:
     db "APP     PY"
