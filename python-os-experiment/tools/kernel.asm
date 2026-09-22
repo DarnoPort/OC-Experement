@@ -413,10 +413,10 @@ print_char:
     ret
 
 print_hex32:
-    push ax
-    mov ax, dx
+    push eax
+    shr eax, 16
     call print_hex16
-    pop ax
+    pop eax
     call print_hex16
     ret
 
