@@ -2,7 +2,7 @@
 
 set -e
 
-PROJECT_ROOT="$(cd "$(dirname "\${BASH_SOURCE[0]}")/.." && pwd)"
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BUILD_DIR="$PROJECT_ROOT/build"
 DISK_IMAGE="$BUILD_DIR/disk.img"
 
@@ -122,7 +122,7 @@ echo
 echo "Disk created successfully."
 echo
 echo "Image:             $DISK_IMAGE"
-echo "Size:              \${DISK_SIZE_MB} MiB"
+echo "Size:              ${DISK_SIZE_MB} MiB"
 echo "Filesystem:        FAT16"
 echo "Reserved sectors:  $RESERVED_SECTORS"
 echo "Bootloader:        sector 0"
