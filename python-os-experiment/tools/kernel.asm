@@ -633,6 +633,8 @@ fat_sector_index:
 fat_offset:
     dw 0
 
+align 4, db 0
+
 dap:
     db 0x10
     db 0x00
