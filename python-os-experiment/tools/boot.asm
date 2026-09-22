@@ -7,6 +7,7 @@ org 0x7C3E
 
 start:
     cli
+    cld
 
     xor ax, ax
     mov ds, ax
