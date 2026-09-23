@@ -86,11 +86,22 @@ get_boot_drive:
     ret
 
 load_boot_sector:
+    push ds
+
+    xor ax, ax
+    mov ds, ax
+    mov si, 0x7C00
+
     mov ax, BPB_BUFFER_SEGMENT
     mov es, ax
-    xor bx, bx
-    xor eax, eax
-    call read_sector
+    xor di, di
+
+    mov cx, 256
+    rep movsw
+
+    pop ds
+
+    clc
     ret
 
 parse_bpb:
