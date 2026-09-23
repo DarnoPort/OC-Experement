@@ -223,8 +223,8 @@ find_application:
     mov eax, [root_start]
     add eax, [root_sector_index]
 
-    mov ax, SECTOR_BUFFER_SEGMENT
-    mov es, ax
+    mov bx, SECTOR_BUFFER_SEGMENT
+    mov es, bx
     xor bx, bx
 
     mov eax, [root_start]
@@ -233,6 +233,7 @@ find_application:
     jc .disk_error
 
     xor di, di
+    mov cx, 16
 
 .next_entry:
     cmp byte [es:di], 0x00
@@ -241,17 +242,34 @@ find_application:
     cmp byte [es:di], 0xE5
     je .skip_entry
 
+    cmp byte [es:di + 11], 0x0F
+    je .skip_entry
+
     push di
+
     mov si, app_name
-    mov cx, 11
-    repe cmpsb
+    mov bx, di
+    mov dx, 11
+
+.compare_name:
+    mov al, [ds:si]
+    cmp al, [es:bx]
+    jne .name_mismatch
+
+    inc si
+    inc bx
+    dec dx
+    jnz .compare_name
+
     pop di
-    je .found
+    jmp .found
+
+.name_mismatch:
+    pop di
 
 .skip_entry:
     add di, 32
-    cmp di, 512
-    jb .next_entry
+    loop .next_entry
 
     inc dword [root_sector_index]
     jmp .next_sector
