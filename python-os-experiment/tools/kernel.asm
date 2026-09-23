@@ -579,7 +579,7 @@ application_too_large:
     jmp kernel_halt
 
 app_name:
-    db "APP     PY"
+    db "APP     PY "
 
 boot_drive:
     db 0
